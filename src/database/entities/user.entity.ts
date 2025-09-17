@@ -3,9 +3,11 @@ import {
   CreateDateColumn,
   Entity,
   Index,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { Conversation } from './conversation.entity';
 
 @Entity()
 export class User {
@@ -27,4 +29,9 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  @OneToMany(() => Conversation, (conversation) => conversation.user, {
+    cascade: true,
+  })
+  conversation: Conversation[];
 }

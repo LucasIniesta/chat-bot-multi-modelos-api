@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigType } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import databaseConfig from '../config/database.config';
+import { Conversation } from './entities/conversation.entity';
 import { User } from './entities/user.entity';
 
 @Module({
@@ -24,7 +25,7 @@ import { User } from './entities/user.entity';
         };
       },
     }),
-    TypeOrmModule.forFeature([User]),
+    TypeOrmModule.forFeature([User, Conversation]),
   ],
   exports: [TypeOrmModule],
 })

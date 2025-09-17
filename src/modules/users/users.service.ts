@@ -65,7 +65,7 @@ export class UsersService {
     return user;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<string> {
+  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
     if (updateUserDto.email) {
       const existingEmail = await this.userRepository.findOne({
         where: {
@@ -90,9 +90,7 @@ export class UsersService {
       throw new NotFoundException(`User with ID ${id} not found`);
     }
 
-    await this.userRepository.save(user);
-
-    return `User ${id} successfully updated`;
+    return this.userRepository.save(user);
   }
 
   async remove(id: string): Promise<Partial<User>> {

@@ -1,9 +1,11 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { HashingService } from 'src/auth/hashing/hashing.service';
 import { User } from 'src/database/entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -14,6 +16,8 @@ export class UsersService {
   constructor(
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
+    @Inject()
+    private readonly hashingService: HashingService,
   ) {}
 
   async create(createUserDto: CreateUserDto): Promise<Partial<User>> {
@@ -26,7 +30,13 @@ export class UsersService {
         `Email ${createUserDto.email} already in use`,
       );
     }
-    const user = this.userRepository.create(createUserDto);
+
+    const newUser = {
+      ...createUserDto,
+      password: await this.hashingService.hash(createUserDto.password),
+    };
+
+    const user = this.userRepository.create(newUser);
     const { name, email } = await this.userRepository.save(user);
 
     return { name, email };
@@ -79,6 +89,12 @@ export class UsersService {
           `Email ${updateUserDto.email} already in use`,
         );
       }
+    }
+
+    if (updateUserDto.password) {
+      updateUserDto.password = await this.hashingService.hash(
+        updateUserDto.password,
+      );
     }
 
     const user = await this.userRepository.preload({

@@ -5,6 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
 import { Conversation } from 'src/database/entities/conversation.entity';
 import { Repository } from 'typeorm';
 import { UsersService } from '../users/users.service';
@@ -21,13 +22,11 @@ export class ConversationsService {
   ) {}
 
   //#TODO: Adicionar o modelo de IA usado na conversa
-  //#TODO: Atualizar rota para usar o token do usuário ao invés do ID
   async create(
     createConversationDto: CreateConversationDto,
+    tokenPayload: TokenPayloadDto,
   ): Promise<Conversation> {
-    const existingUser = await this.userService.findOne(
-      createConversationDto.userId,
-    );
+    const existingUser = await this.userService.findOne(tokenPayload.sub);
 
     const newConversation = {
       ...createConversationDto,
@@ -38,30 +37,24 @@ export class ConversationsService {
     return this.conversationRepository.save(conversation);
   }
 
-  //#TODO: Atualizar rota para usar o token do usuário ao invés do ID
-  async findAllUserConversations(id: string) {
+  async findAllUserConversations(tokenPayload: TokenPayloadDto) {
     const userConversations = await this.conversationRepository.find({
       where: {
-        user: { id: id },
+        user: { id: tokenPayload.sub },
       },
     });
 
     return userConversations;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} conversation`;
-  }
-
-  //#TODO: Atualizar rota para usar o token do usuário ao invés do ID
   async updateConversationTitle(
-    userId: string,
+    tokenPayload: TokenPayloadDto,
     conversationId: string,
     updateConversationTitle: UpdateConversationTitleDto,
   ) {
     const isMyConversation = await this.conversationRepository.findOne({
       where: {
-        user: { id: userId },
+        user: { id: tokenPayload.sub },
         id: conversationId,
       },
     });
@@ -88,10 +81,10 @@ export class ConversationsService {
   }
 
   //#TODO: Atualizar rota para usar o token do usuário ao invés do ID
-  async remove(conversationId: string, userId: string) {
+  async remove(conversationId: string, tokenPayload: TokenPayloadDto) {
     const isMyConversation = await this.conversationRepository.findOne({
       where: {
-        user: { id: userId },
+        user: { id: tokenPayload.sub },
         id: conversationId,
       },
     });

@@ -5,6 +5,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
 import { HashingService } from 'src/auth/hashing/hashing.service';
 import { User } from 'src/database/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -75,7 +76,10 @@ export class UsersService {
     return user;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto): Promise<User> {
+  async update(
+    tokenPayload: TokenPayloadDto,
+    updateUserDto: UpdateUserDto,
+  ): Promise<User> {
     if (updateUserDto.email) {
       const existingEmail = await this.userRepository.findOne({
         where: {
@@ -84,7 +88,7 @@ export class UsersService {
         select: ['id'],
       });
 
-      if (existingEmail && existingEmail.id !== id) {
+      if (existingEmail && existingEmail.id !== tokenPayload.sub) {
         throw new ConflictException(
           `Email ${updateUserDto.email} already in use`,
         );
@@ -98,19 +102,19 @@ export class UsersService {
     }
 
     const user = await this.userRepository.preload({
-      id,
+      id: tokenPayload.sub,
       ...updateUserDto,
     });
 
     if (!user) {
-      throw new NotFoundException(`User with ID ${id} not found`);
+      throw new NotFoundException(`User with ID ${tokenPayload.sub} not found`);
     }
 
     return this.userRepository.save(user);
   }
 
-  async remove(id: string): Promise<Partial<User>> {
-    const user = await this.findOne(id);
+  async remove(tokenPayload: TokenPayloadDto): Promise<Partial<User>> {
+    const user = await this.findOne(tokenPayload.sub);
 
     const { name, email } = await this.userRepository.remove(user);
 

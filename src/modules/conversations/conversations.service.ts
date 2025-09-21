@@ -10,6 +10,7 @@ import { Conversation } from 'src/database/entities/conversation.entity';
 import { Repository } from 'typeorm';
 import { UsersService } from '../users/users.service';
 import { CreateConversationDto } from './dto/create-conversation.dto';
+import { PaginationDto } from './dto/pagination.dto';
 import { UpdateConversationTitleDto } from './dto/update-conversation-title.dto';
 
 @Injectable()
@@ -37,11 +38,17 @@ export class ConversationsService {
     return this.conversationRepository.save(conversation);
   }
 
-  async findAllUserConversations(tokenPayload: TokenPayloadDto) {
+  async findAllUserConversations(
+    tokenPayload: TokenPayloadDto,
+    paginationDto: PaginationDto,
+  ) {
+    const { limit, offset } = paginationDto;
     const userConversations = await this.conversationRepository.find({
       where: {
         user: { id: tokenPayload.sub },
       },
+      take: limit,
+      skip: offset,
     });
 
     return userConversations;

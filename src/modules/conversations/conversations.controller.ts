@@ -7,6 +7,7 @@ import {
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
   UseGuards,
 } from '@nestjs/common';
 import { TokenPayloadDto } from 'src/auth/dto/token-payload.dto';
@@ -14,6 +15,7 @@ import { AuthTokenGuard } from 'src/auth/guards/auth-token.guard';
 import { TokenPayloadParam } from 'src/auth/params/token-payload.param';
 import { ConversationsService } from './conversations.service';
 import { CreateConversationDto } from './dto/create-conversation.dto';
+import { PaginationDto } from './dto/pagination.dto';
 import { UpdateConversationTitleDto } from './dto/update-conversation-title.dto';
 
 @UseGuards(AuthTokenGuard)
@@ -33,8 +35,14 @@ export class ConversationsController {
   }
 
   @Get()
-  findAllUserConversations(@TokenPayloadParam() tokenPayload: TokenPayloadDto) {
-    return this.conversationsService.findAllUserConversations(tokenPayload);
+  findAllUserConversations(
+    @TokenPayloadParam() tokenPayload: TokenPayloadDto,
+    @Query() paginationDto: PaginationDto,
+  ) {
+    return this.conversationsService.findAllUserConversations(
+      tokenPayload,
+      paginationDto,
+    );
   }
 
   @Patch(':id')

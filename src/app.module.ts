@@ -5,6 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { ConversationsModule } from './modules/conversations/conversations.module';
 import { ModelProviderModule } from './modules/model-provider/model-provider.module';
 import { UsersModule } from './modules/users/users.module';
+import { MessageModule } from './modules/message/message.module';
 
 @Module({
   imports: [
@@ -16,6 +17,7 @@ import { UsersModule } from './modules/users/users.module';
     ConversationsModule,
     AuthModule,
     ModelProviderModule,
+    MessageModule,
   ],
   controllers: [],
   providers: [],

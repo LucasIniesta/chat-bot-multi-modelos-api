@@ -22,7 +22,6 @@ export class ConversationsService {
     private readonly userService: UsersService,
   ) {}
 
-  //#TODO: Adicionar o modelo de IA usado na conversa
   async create(
     createConversationDto: CreateConversationDto,
     tokenPayload: TokenPayloadDto,
@@ -87,7 +86,6 @@ export class ConversationsService {
     return { id, title };
   }
 
-  //#TODO: Atualizar rota para usar o token do usuário ao invés do ID
   async remove(conversationId: string, tokenPayload: TokenPayloadDto) {
     const isMyConversation = await this.conversationRepository.findOne({
       where: {

@@ -1,3 +1,6 @@
+import { ClaudeModels } from 'src/modules/model-provider/enums/claude-models.enum';
+import { OpenAiModels } from 'src/modules/model-provider/enums/openai-models.enum';
+import { TProviderModels } from 'src/modules/model-provider/types/provider-models.type';
 import {
   Column,
   CreateDateColumn,
@@ -16,6 +19,13 @@ export class Conversation {
 
   @Column({ type: 'varchar', length: 50, default: 'Nova conversa' })
   title: string;
+
+  @Column({
+    type: 'enum',
+    enum: [ClaudeModels, OpenAiModels],
+    default: OpenAiModels.GPT_5_NANO,
+  })
+  model: TProviderModels;
 
   @CreateDateColumn()
   createdAt: Date;

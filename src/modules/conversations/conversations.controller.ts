@@ -22,7 +22,6 @@ import { UpdateConversationTitleDto } from './dto/update-conversation-title.dto'
 @Controller('conversations')
 export class ConversationsController {
   constructor(private readonly conversationsService: ConversationsService) {}
-  //#TODO: Adicionar o modelo de IA usado na conversa
   @Post()
   create(
     @Body() createConversationDto: CreateConversationDto,

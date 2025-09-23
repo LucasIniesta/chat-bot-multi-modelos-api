@@ -8,8 +8,6 @@ import {
   IsString,
   ValidateNested,
 } from 'class-validator';
-import { ClaudeModels } from '../enums/claude-models.enum';
-import { OpenAiModels } from '../enums/openai-models.enum';
 import { TProviderMessages } from '../types/provider-messages.type';
 import { TProviderModels } from '../types/provider-models.type';
 
@@ -25,10 +23,7 @@ export class ProviderMessageDto implements TProviderMessages {
 
 export class ProvidersChatDto {
   @IsNotEmpty({ message: 'Model is required' })
-  @IsEnum(
-    { ...OpenAiModels, ...ClaudeModels },
-    { message: 'Invalid model. Must be a valid OpenAI or Claude model' },
-  )
+  @IsString()
   model: TProviderModels;
 
   @IsNotEmpty({ message: 'Messages are required' })

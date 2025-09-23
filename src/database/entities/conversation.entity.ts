@@ -7,8 +7,10 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Message } from './message.entity';
 import { User } from './user.entity';
 
 @Entity()
@@ -22,7 +24,7 @@ export class Conversation {
 
   @Column({
     type: 'enum',
-    enum: [ClaudeModels, OpenAiModels],
+    enum: [...Object.values(ClaudeModels), ...Object.values(OpenAiModels)],
     default: OpenAiModels.GPT_5_NANO,
   })
   model: TProviderModels;
@@ -33,4 +35,9 @@ export class Conversation {
   @ManyToOne(() => User, (user) => user.conversation, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: User;
+
+  @OneToMany(() => Message, (message) => message.conversation, {
+    cascade: true,
+  })
+  messages: Message[];
 }

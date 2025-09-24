@@ -46,6 +46,7 @@ export class MessageService {
 
     const newUserMessage = this.messageRepository.create({
       ...createMessageDto,
+      role: 'user',
       conversation,
     });
 

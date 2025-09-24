@@ -2,8 +2,6 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
-  Param,
   Patch,
   Post,
   UseGuards,
@@ -22,18 +20,6 @@ export class UsersController {
   @Post()
   create(@Body() createUserDto: CreateUserDto) {
     return this.usersService.create(createUserDto);
-  }
-
-  //#TODO: Apagar essa rota quando terminar, pois não será utilizada no futuro
-  @Get()
-  findAll() {
-    return this.usersService.findAll();
-  }
-
-  //#TODO: Apagar essa rota quando terminar, pois não será utilizada no futuro
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(id);
   }
 
   @UseGuards(AuthTokenGuard)

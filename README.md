@@ -116,7 +116,7 @@ A aplicação estará disponível em http://localhost:3000
 ### 🔐 Autenticação
 
 ```
-POST /auth/login
+POST /auth/
 ```
 
 **Descrição**: Realiza login do usuário
@@ -132,7 +132,7 @@ POST /auth/login
 ### 👥 Usuários
 
 ```
-POST /users/register
+POST /users
 ```
 
 **Descrição**: Registra novo usuário (público)
@@ -147,13 +147,13 @@ POST /users/register
 ```
 
 ```
-PUT /users/profile
+PATCH /users
 ```
 
 **Descrição**: Atualiza perfil do usuário
 
 ```
-DELETE /users/account
+DELETE /users
 ```
 
 **Descrição**: Remove conta do usuário
@@ -197,8 +197,8 @@ POST /conversations
 
 ```json
 {
-  "title": "Conversa sobre IA",
-  "model": "gpt-4"
+  "title": "Conversa sobre IA", //Default: Nova conversa
+  "model": "gpt-5-2025-08-07" //Default: gpt-5-nano-2025-08-07
 }
 ```
 
@@ -209,10 +209,17 @@ GET /conversations?page=1&limit=10
 **Descrição**: Lista conversas do usuário com paginação
 
 ```
-PUT /conversations/:id
+PATCH /conversations/:id
 ```
 
 **Descrição**: Atualiza título da conversa
+**Body**:
+
+```json
+{
+  "title": "Titulo atualizado"
+}
+```
 
 ```
 DELETE /conversations/:id
@@ -223,7 +230,7 @@ DELETE /conversations/:id
 ### 📨 Mensagens
 
 ```
-POST /conversations/:id/messages
+POST /message
 ```
 
 **Descrição**: Envia mensagem e recebe resposta da IA
@@ -231,12 +238,14 @@ POST /conversations/:id/messages
 
 ```json
 {
-  "content": "Explique o que é inteligência artificial"
+  "content": "Explique o que é inteligência artificial",
+  "role": "user",
+  "conversationId": "id_da_conversa"
 }
 ```
 
 ```
-GET /conversations/:id/messages
+GET /message/:conversationId
 ```
 
 **Descrição**: Lista mensagens de uma conversa
@@ -362,33 +371,6 @@ npm run lint           # Executa linting
 npm run format         # Formata código
 ```
 
-## 🔧 Configuração Avançada
-
-### Variáveis de Ambiente Opcionais
-
-```env
-# Rate Limiting
-THROTTLE_TTL=60000
-THROTTLE_LIMIT=100
-
-# Logging
-LOG_LEVEL=info
-LOG_FORMAT=json
-
-# CORS
-CORS_ORIGIN=http://localhost:3000
-CORS_CREDENTIALS=true
-```
-
-### Configuração de Produção
-
-```env
-NODE_ENV=production
-DATABASE_SSL=true
-JWT_SECRET=jwt_secret_muito_seguro_para_producao
-REDIS_URL=redis://localhost:6379
-```
-
 ## 🤝 Contribuindo
 
 1. Fork o projeto
@@ -447,3 +429,7 @@ Este projeto está sob a licença MIT.
 ⭐ Se este projeto te ajudou, considera dar uma estrela no repositório!
 
 **Feito com ❤️ e NestJS**
+
+```
+
+```

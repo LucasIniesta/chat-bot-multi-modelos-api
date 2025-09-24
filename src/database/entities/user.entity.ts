@@ -34,4 +34,7 @@ export class User {
     cascade: true,
   })
   conversation: Conversation[];
+
+  @Column({ type: 'boolean', default: true })
+  active: boolean;
 }

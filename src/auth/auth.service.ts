@@ -31,6 +31,7 @@ export class AuthService {
   async login(loginDto: LoginDto) {
     const userExists = await this.userRepository.findOneBy({
       email: loginDto.email,
+      active: true,
     });
 
     const passwordIsValid = userExists
@@ -54,7 +55,9 @@ export class AuthService {
         this.jwtConfiguration,
       );
 
-      const user = await this.userRepository.findOneBy({ id: sub });
+      const user = await this.userRepository.findOne({
+        where: { id: sub, active: true },
+      });
 
       if (!user) {
         throw new NotFoundException(`User ${sub} doesn't exist`);

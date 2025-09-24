@@ -129,6 +129,19 @@ POST /auth/
 }
 ```
 
+```
+POST /auth/refresh
+```
+
+**Descrição**: Realiza o refresh do token
+**Body**:
+
+```json
+{
+	"refreshToken": "{{refreshToken}}"
+}
+```
+
 ### 👥 Usuários
 
 ```
@@ -157,33 +170,6 @@ DELETE /users
 ```
 
 **Descrição**: Remove conta do usuário
-
-## 📁 Estrutura do Projeto
-
-```
-src/
-├── auth/                 # Módulo de autenticação
-│   ├── dto/             # DTOs de autenticação
-│   ├── guards/          # Guards JWT
-│   ├── hashing/         # Utilitários de hash
-│   └── params/          # Parâmetros de autenticação
-├── config/              # Configurações gerais
-├── database/            # Configuração do banco
-├── modules/             # Módulos da aplicação
-│   ├── conversations/   # Módulo de conversas
-│   │   └── dto/         # DTOs de conversa
-│   ├── message/         # Módulo de mensagens
-│   │   └── dto/         # DTOs de mensagem
-│   ├── model-provider/  # Provedores de IA
-│   │   ├── dto/         # DTOs do provedor
-│   │   ├── enums/       # Enums de modelos
-│   │   ├── factories/   # Factory Pattern
-│   │   ├── providers/   # Implementações dos provedores
-│   │   └── types/       # Tipos TypeScript
-│   └── users/           # Módulo de usuários
-│       └── dto/         # DTOs de usuário
-├── app.module.ts        # Módulo principal
-└── main.ts              # Ponto de entrada
 ```
 
 ### 💬 Conversas
@@ -239,7 +225,6 @@ POST /message
 ```json
 {
   "content": "Explique o que é inteligência artificial",
-  "role": "user",
   "conversationId": "id_da_conversa"
 }
 ```

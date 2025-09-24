@@ -429,5 +429,3 @@ Este projeto está sob a licença MIT.
 ⭐ Se este projeto te ajudou, considera dar uma estrela no repositório!
 
 **Feito com ❤️ e NestJS**
-
-**Feito com ❤️ e NestJS**

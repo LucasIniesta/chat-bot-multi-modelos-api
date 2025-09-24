@@ -10,13 +10,21 @@ Um chatbot avançado construído com NestJS que suporta múltiplos provedores de
 ## 🚀 Funcionalidades
 
 ✅ **Multi-Provedores**: Suporte para OpenAI e Claude Anthropic
+
 ✅ **Autenticação JWT**: Sistema de login seguro com tokens
+
 ✅ **Conversas Persistentes**: Histórico completo de mensagens
+
 ✅ **Múltiplos Modelos**: Escolha diferentes modelos por conversa
+
 ✅ **API RESTful**: Endpoints bem estruturados e documentados
+
 ✅ **Validação Robusta**: Validações em múltiplas camadas
+
 ✅ **Segurança Avançada**: Proteção de recursos por usuário
+
 ✅ **Arquitetura Escalável**: Padrões de design profissionais
+
 
 ## 🏗️ Arquitetura
 

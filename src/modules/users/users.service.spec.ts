@@ -116,6 +116,16 @@ describe('UserService', () => {
 
       const result = await usersService.findOne(mockUser.id);
 
+      expect(userRepository.findOne).toHaveBeenCalledWith({
+        select: {
+          createdAt: true,
+          email: true,
+          id: true,
+          name: true,
+          updatedAt: true,
+        },
+        where: { id: 'user--uuid-id' },
+      });
       expect(result).toStrictEqual(mockUser);
     });
 

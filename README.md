@@ -10,12 +10,19 @@ Um chatbot avançado construído com NestJS que suporta múltiplos provedores de
 ## 🚀 Funcionalidades
 
 ✅ **Multi-Provedores**: Suporte para OpenAI e Claude Anthropic
+
 ✅ **Autenticação JWT**: Sistema de login seguro com tokens
+
 ✅ **Conversas Persistentes**: Histórico completo de mensagens
+
 ✅ **Múltiplos Modelos**: Escolha diferentes modelos por conversa
+
 ✅ **API RESTful**: Endpoints bem estruturados e documentados
+
 ✅ **Validação Robusta**: Validações em múltiplas camadas
+
 ✅ **Segurança Avançada**: Proteção de recursos por usuário
+
 ✅ **Arquitetura Escalável**: Padrões de design profissionais
 
 ## 🏗️ Arquitetura
@@ -138,7 +145,7 @@ POST /auth/refresh
 
 ```json
 {
-	"refreshToken": "{{refreshToken}}"
+  "refreshToken": "{{refreshToken}}"
 }
 ```
 
@@ -170,13 +177,16 @@ DELETE /users
 ```
 
 **Descrição**: Remove conta do usuário
+
 ```
 
 ### 💬 Conversas
 
 ```
+
 POST /conversations
-```
+
+````
 
 **Descrição**: Cria nova conversa
 **Body**:
@@ -186,7 +196,7 @@ POST /conversations
   "title": "Conversa sobre IA", //Default: Nova conversa
   "model": "gpt-5-2025-08-07" //Default: gpt-5-nano-2025-08-07
 }
-```
+````
 
 ```
 GET /conversations?page=1&limit=10

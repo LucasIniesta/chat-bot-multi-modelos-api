@@ -43,7 +43,7 @@ export class UsersService {
     return { name, email };
   }
 
-  async findOne(id: string): Promise<User> {
+  async findOne(id: string) {
     const user = await this.userRepository.findOne({
       where: {
         id,
@@ -83,15 +83,17 @@ export class UsersService {
       }
     }
 
+    const updateData = { ...updateUserDto };
+
     if (updateUserDto.password) {
-      updateUserDto.password = await this.hashingService.hash(
+      updateData.password = await this.hashingService.hash(
         updateUserDto.password,
       );
     }
 
     const user = await this.userRepository.preload({
       id: tokenPayload.sub,
-      ...updateUserDto,
+      ...updateData,
     });
 
     if (!user) {

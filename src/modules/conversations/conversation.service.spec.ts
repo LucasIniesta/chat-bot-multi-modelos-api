@@ -269,10 +269,9 @@ describe('ConversationService', () => {
       jest.spyOn(conversationRepository, 'findOne').mockResolvedValue(null);
 
       expect(
-        conversationService.updateConversationTitle(
-          mockTokenPayload as TokenPayloadDto,
+        conversationService.remove(
           mockConversationId,
-          mockUpdateConversationDto,
+          mockTokenPayload as TokenPayloadDto,
         ),
       ).rejects.toThrow(
         new ForbiddenException(`This conversation isn't yours`),

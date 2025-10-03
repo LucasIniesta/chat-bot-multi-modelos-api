@@ -26,7 +26,6 @@ export class ProvidersChatDto {
   @IsString()
   model: TProviderModels;
 
-  @IsNotEmpty({ message: 'Messages are required' })
   @IsArray({ message: 'Messages must be an array' })
   @ArrayMinSize(1, { message: 'At least one message is required' })
   @ArrayMaxSize(100, { message: 'Too many messages (max 100)' })

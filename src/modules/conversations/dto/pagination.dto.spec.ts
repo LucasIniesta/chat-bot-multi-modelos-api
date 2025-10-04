@@ -21,6 +21,21 @@ describe('PaginationDto', () => {
     expect(errors.length).toBe(2);
   });
 
+  it('Should validate when DTO is valid and have no offset', async () => {
+    const dto = new PaginationDto();
+    dto.limit = 10;
+
+    const errors = await validate(dto);
+    expect(errors.length).toBe(0);
+  });
+  it('Should validate when DTO is valid and have no limit', async () => {
+    const dto = new PaginationDto();
+    dto.offset = 0;
+
+    const errors = await validate(dto);
+    expect(errors.length).toBe(0);
+  });
+
   describe('limit', () => {
     it('Should fail when limit is not an int', async () => {
       const dto = new PaginationDto();
